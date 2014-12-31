@@ -4,6 +4,16 @@
     <head>
         <title>Code Warrior</title>
         
+        <style type="text/css" media="screen">
+            #editor { 
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+        </style>
+        
         <!-- jQuery -->
         <script type="text/javascript" src= <?php echo base_url("application/assets/js/jquery-2.1.3.min.js"); ?> ></script>
         
@@ -22,7 +32,9 @@
         
         <!-- App -->
         <script type="text/javascript" src= <?php echo base_url("application/assets/js/app.js"); ?> ></script>
+        <script type="text/javascript" src= <?php echo base_url("application/assets/js/ace/ace.js"); ?> ></script>
         <link rel="stylesheet" type="text/css" href= <?php echo base_url("application/assets/css/style.css"); ?> >
+        
         
     </head>
     
@@ -65,11 +77,16 @@
                 </div>
                 <div class="col-md-6">
                     <div class="panel panel-default">
-                        <div class="panel-content">
-                            <textarea ></textarea>
-                            </br>
+                        <div class="panel-content" style="height:500px">
+                            <div class="row" style="height:200px">
+                                <div class="col-md-offset-1" id="editor" >
+                                    
+                                </div>
+                                asdasdasd
+                            </div>
+                        </div>
+                        <div class="panel-footer">
                             <a href="#" class="btn btn-primary btn-raised">Compile</a>
-                            
                         </div>
                     </div>
                 
@@ -81,7 +98,11 @@
         
         
         
-        
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/javascript");
+        </script>
     </body>
 
 </html>
