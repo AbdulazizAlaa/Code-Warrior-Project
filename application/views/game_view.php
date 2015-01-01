@@ -22,6 +22,10 @@
         
         <!-- App -->
         <script type="text/javascript" src= <?php echo base_url("application/assets/js/ace/ace.js"); ?> ></script>
+        <script type="text/javascript" src= <?php echo base_url("application/assets/js/player.js"); ?> ></script>
+        <script type="text/javascript" src= <?php echo base_url("application/assets/js/tile.js"); ?> ></script>
+        <script type="text/javascript" src= <?php echo base_url("application/assets/js/map.js"); ?> ></script>
+        <script type="text/javascript" src= <?php echo base_url("application/assets/js/app.js"); ?> ></script>
         <link rel="stylesheet" type="text/css" href= <?php echo base_url("application/assets/css/style.css"); ?> >
 
         
@@ -85,7 +89,7 @@
         
         
         
-        <script type="text/javascript" src= <?php echo base_url("application/assets/js/app.js"); ?> ></script>
+        <script type="text/javascript" src= <?php echo base_url("application/assets/js/editor.js"); ?> ></script>
     </body>
 
 </html>
