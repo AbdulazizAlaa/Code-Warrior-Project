@@ -6,6 +6,26 @@ editor.resize(true);
 
 
 $(document).ready(function(){
+    
+    
+    var compileButton = $("#submit");
+    
+    compileButton.click(function(e){
+        var code = editor.getValue();
+        var url = "http://localhost:85/codewarrior/parser/compile?code_text="+code;
+        
+        $.getJSON(url, function(e){
+            
+            alert("Success Your request reached the server");
+            
+        });
+        
+    });
+    Draw(0);
+    
+    
+    
+    //Ripple Effect
     $(".ripple-effect").click(function(e){
         var rippler = $(this);
 
@@ -37,29 +57,236 @@ $(document).ready(function(){
         }).addClass("animate");
         console.log("ripple");
     });
-    
-    var compileButton = $("#submit");
-    
-    compileButton.click(function(e){
-        var code = editor.getValue();
-        var url = "http://localhost:85/codewarrior/parser/compile?code_text="+code;
-        
-        $.getJSON(url, function(e){
-            
-            alert("Success Your request reached the server");
-            
-        });
-        
-    });
-    Draw(0);
 });
 
+
+function Player(x, y, width, height, context, image){
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.context = context;
+    this.image = image;
+}
+
+Player.prototype.loadImage = function(src, load){
+    this.image = new Image();
+    this.image.onload = load;
+    this.image.src = src;
+};
+
+function Tile(isPlayer, isRoad, x, y, width, height, context){
+    this.playerTile = isPlayer;
+    this.roadTile = isRoad;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.roadColor = "rgba(45,216,129,1)";
+    this.sideColor = "rgba(221,213,190,1)";
+    this.context = context;
+}
+
+Tile.prototype.drawHexagon = function(){
+    if(this.roadTile){
+        this.context.fillStyle = this.roadColor;    
+    }else{
+        this.context.fillStyle = this.sideColor;
+    }
+    this.context.beginPath();
+    //this.context.fillStyle = this.color;
+    this.context.moveTo(this.x,this.y);
+    this.context.lineTo(this.x+this.width/2,this.y-this.height/4);
+    this.context.lineTo(this.x+this.width,this.y);
+    this.context.lineTo(this.x+this.width,this.y+this.height/2);
+    this.context.lineTo(this.x+this.width/2,this.y+3*this.height/4);
+    this.context.lineTo(this.x,this.y+this.height/2);
+    this.context.lineTo(this.x,this.y);
+    this.context.stroke();
+    this.context.fill();
+    this.context.closePath();
+    
+};
+
+Tile.prototype.emptyHexagon = function(){
+    
+};
+
+Tile.prototype.emptySquare = function(){
+    this.context.clearRect(this.x, this.y, this.width, this.height);
+};
     
 function Draw(level) {
 
     var mainCanvas = document.getElementById("canvas");  
+    var context = mainCanvas.getContext("2d");
     
-    if(level == 0)
+    var initX=mainCanvas.width/2, initY=mainCanvas.height/2;
+    var gX=initX, gY=initY;
+    var x, y, w=50, h=50;
+    
+    var mapTiles = [];
+    
+    //left Cluster
+    
+    //middle
+    x=gX, y=gY;
+    
+    mapTiles.push(new Tile(false, true, x, y, w, h, context));
+    
+    //bottom right
+    x=gX+w/2, y=gY+3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //bottom left
+    x=gX-w/2, y=gY+3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //middle right
+    x=gX+w, y=gY;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //middle left
+    x=gX-w, y=gY;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //top right
+    x=gX+w/2, y=gY-3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //top left
+    x=gX-w/2, y=gY-3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //right Cluster
+    gX = initX+3*w;
+    
+    //middle
+    x=gX, y=gY;
+    
+    mapTiles.push(new Tile(false, true, x, y, w, h, context));
+    
+    //bottom right
+    x=gX+w/2, y=gY+3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //bottom left
+    x=gX-w/2, y=gY+3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //middle right
+    x=gX+w, y=gY;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //middle left
+    x=gX-w, y=gY;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //top right
+    x=gX+w/2, y=gY-3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //top left
+    x=gX-w/2, y=gY-3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //third Cluster
+    gY = initY+3*h/4;
+    gX = initX+3*w/2;
+    
+    //middle
+    x=gX, y=gY;
+    
+    mapTiles.push(new Tile(false, true, x, y, w, h, context));
+    
+    //bottom right
+    x=gX+w/2, y=gY+3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //bottom left
+    x=gX-w/2, y=gY+3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //middle right
+    x=gX+w, y=gY;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //middle left
+    x=gX-w, y=gY;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //top right
+    x=gX+w/2, y=gY-3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //top left
+    x=gX-w/2, y=gY-3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    
+    //third Cluster
+    gY = initY-3*h/4;
+    gX = initX+3*w/2;
+    
+    //middle
+    x=gX, y=gY;
+    
+    mapTiles.push(new Tile(false, true, x, y, w, h, context));
+    
+    //bottom right
+    x=gX+w/2, y=gY+3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //bottom left
+    x=gX-w/2, y=gY+3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //middle right
+    x=gX+w, y=gY;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //middle left
+    x=gX-w, y=gY;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //top right
+    x=gX+w/2, y=gY-3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+    
+    //top left
+    x=gX-w/2, y=gY-3*h/4;
+    
+    mapTiles.push(new Tile(false, false, x, y, w, h, context));
+
+    
+    for(var i=0 ; i<mapTiles.length ; i++){
+        mapTiles[i].drawHexagon();
+    }
+    
+   /* if(level == 0)
     {
         var mapTile = [
         
@@ -84,5 +311,5 @@ function Draw(level) {
         }
             
         
-    }
+    }*/
 }
