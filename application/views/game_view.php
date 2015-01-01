@@ -4,10 +4,6 @@
     <head>
         <title>Code Warrior</title>
         
-        <style type="text/css" media="screen">
-            
-        </style>
-        
         <!-- jQuery -->
         <script type="text/javascript" src= <?php echo base_url("application/assets/js/jquery-2.1.3.min.js"); ?> ></script>
         
@@ -43,7 +39,7 @@
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                 </button>
-                                <a class="navbar-brand" href="javascript:void(0)">Code Warrior <div class="ripple-wrapper"></div></a>
+                                <a class="navbar-brand ripple-effect" href="javascript:void(0)">Code Warrior <div class="ripple-wrapper"></div></a>
                             </div>
                             <div class="navbar-collapse collapse navbar-responsive-collapse">
                                 <form class="navbar-form navbar-left">
@@ -76,7 +72,7 @@
                             </div>
                         </div>
                         <div class="panel-footer">
-                            <a href="#" class="btn btn-primary btn-raised" id="submit">Compile</a>
+                            <button type="button" class="btn btn-primary ripple-effect btn-raised" id="submit">Compile</button>
                         </div>
                     </div>
                 
